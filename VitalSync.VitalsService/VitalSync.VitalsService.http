@@ -1,0 +1,6 @@
+@VitalSync.VitalsService_HostAddress = http://localhost:5206
+
+GET {{VitalSync.VitalsService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
