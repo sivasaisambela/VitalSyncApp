@@ -1,0 +1,6 @@
+@VitalSync.DoctorService.Api_HostAddress = http://localhost:5192
+
+GET {{VitalSync.DoctorService.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
