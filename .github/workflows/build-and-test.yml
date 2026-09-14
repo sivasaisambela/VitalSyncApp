@@ -1,0 +1,36 @@
+name: VitalSync Build & Test CI
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET SDK 8.0
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore Dependencies
+      run: dotnet restore VitalSync.sln
+
+    - name: Build Solution
+      run: dotnet build VitalSync.sln --configuration Release --no-restore
+
+    - name: Run Backend Unit & Integration Tests
+      run: dotnet test VitalSync.sln --configuration Release --no-build --verbosity normal --logger "trx;LogFileName=test_results.trx"
+
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: "**/TestResults/*.trx"
