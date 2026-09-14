@@ -10,8 +10,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// 2. Retrieve Connection String with Fail-Fast Validation (Enterprise Standard)
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? "Server=(localdb)\\mssqllocaldb;Database=VitalSync_DoctorDb;Trusted_Connection=True;MultipleActiveResultSets=true";
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' was not found in application configuration.");
+
+
 
 builder.Services.AddDbContext<DoctorDbContext>(options =>
     options.UseSqlServer(connectionString));

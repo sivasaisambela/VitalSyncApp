@@ -10,8 +10,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// 2. Retrieve Connection String with Fail-Fast Validation (Enterprise Standard)
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? "Server=(localdb)\\mssqllocaldb;Database=VitalSync_LabDb;Trusted_Connection=True;MultipleActiveResultSets=true";
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' was not found in application configuration.");
+
+
+// 3. Register EF Core DbContext
 
 builder.Services.AddDbContext<LabDbContext>(options =>
     options.UseSqlServer(connectionString));

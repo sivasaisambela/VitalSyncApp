@@ -1,0 +1,6 @@
+@VitalSync.SagaOrchestrator.Api_HostAddress = http://localhost:5135
+
+GET {{VitalSync.SagaOrchestrator.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
